@@ -25,7 +25,7 @@ before_install:
 
 #verify build runs
 script:
-  - docker container run moberlander08/react-test npm test -- --coverave 
+  - docker container run moberlander08/react-test npm test -- --coverage
 
 #scustom deploy provider (local script)
 deploy:
