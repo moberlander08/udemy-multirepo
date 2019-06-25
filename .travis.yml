@@ -13,7 +13,7 @@ env:
 #next login to docker hub
 before_install:
   - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
-  - curl https://sdk.clould.google.com | /bin/bash > /dev/null
+  - curl https://sdk.cloud.google.com | /bin/bash > /dev/null
   - source $HOME/google-clould-sdk/path.bash.inc
   - gcloud components update kubectl 
   - gcloud auth activate-service-account --key-file service-account.json
