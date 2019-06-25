@@ -9,9 +9,9 @@ docker push moberlander08/multi-client:latest
 docker push moberlander08/multi-server:latest
 docker push moberlander08/multi-worker:latest
 
-docker push moberlander08/multi-client:latest:$GIT_SHA
-docker push moberlander08/multi-server:latest:$GIT_SHA
-docker push moberlander08/multi-worker:latest:$GIT_SHA
+docker push moberlander08/multi-client:$GIT_SHA
+docker push moberlander08/multi-server:$GIT_SHA
+docker push moberlander08/multi-worker:$GIT_SHA
 
 
 #apply k8s configs
