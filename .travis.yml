@@ -1,0 +1,35 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+env:
+  global:
+    - GIT_SHA=${git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
+#install the google sdk and add commands to bash shell
+#next login gcloud and set the need properties
+#next login to docker hub
+before_install:
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  - curl https://sdk.clould.google.com | /bin/bash > /dev/null
+  - source $HOME/google-clould-sdk/path.bash.inc
+  - gcloud components update kubectl 
+  - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project multi-k8s-v2-244814
+  - gcloud config set compute/zone us-east1-d	
+  - gcloud containter clusters get-credentials multi-cluster
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker image build -t moberlander08/react-test -f ./client/Dockerfile.dev ./client
+
+#verify build runs
+script:
+  - docker container run moberlander08/react-test npm test -- --coverave 
+
+#scustom deploy provider (local script)
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
